@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 const Listing = require("./models/Listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
-
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const ejsMate = require("ejs-mate");
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";  
 
 // Connect to the database mongodb
 async function main() {
@@ -15,18 +15,21 @@ async function main() {
 }
 main().catch((err) => {
     console.log(err);
-});
-
-// attach the view page
+}); 
+ 
+// attach the view page  
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+// use ejs-locals for all ejs templates:
+app.engine('ejs', ejsMate);
+app.use(express.static(path.join(__dirname,"/public")));
 
 // Code to link page
-
+ 
 // index.route
-app.get("/listings", async (req, res) => {
+app.get("/listings", async (req, res) => { 
     const allListing = await Listing.find({});
     res.render("listings/index", { allListing });
 });
@@ -55,7 +58,7 @@ app.get("/listings/:id/edit", async (req, res) => {
         res.render("listings/edit", { listing }); // Render edit.ejs
     } catch (error) {
         console.error(error);
-        res.status(400).send("Invalid ID format");
+        res.status(400).send("Invalid ID format"); 
     } 
 });
 
@@ -68,7 +71,7 @@ app.put("/listings/:id",async(req,res)=>{
 
 });
 
-//DELETE Roue
+//DELETE Roue                                                        
 app.delete("/listing/:id",async(req,res)=>{
     let {id}=req.params;
     let deleteListing = await Listing.findByIdAndDelete(id);
@@ -93,6 +96,10 @@ app.get("/listings/:id", async (req, res) => {
         res.status(400).send("Invalid ID format"); 
     }
     
+});
+
+app.get("/",(req,res)=>{
+    res.send("Hell World")
 });
 
 
