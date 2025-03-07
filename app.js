@@ -12,14 +12,14 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 async function main() {
     await mongoose.connect(MONGO_URL);
     console.log("connected to db");
-}
+} 
 main().catch((err) => {
     console.log(err);
 }); 
  
 // attach the view page  
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views")); 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 // use ejs-locals for all ejs templates:
@@ -72,12 +72,22 @@ app.put("/listings/:id",async(req,res)=>{
 });
 
 //DELETE Roue                                                        
-app.delete("/listing/:id",async(req,res)=>{
-    let {id}=req.params;
-    let deleteListing = await Listing.findByIdAndDelete(id);
-    console.log(deleteListing)
-    res.redirect("/listings")
-})
+app.delete("/listings/:id", async (req, res) => {
+    try {
+        let { id } = req.params;
+        let deleteListing = await Listing.findByIdAndDelete(id); 
+
+        if (!deleteListing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+
+        res.json({ message: "Listing deleted successfully",  });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}); 
+
+
 
 
 // Show route

@@ -5,38 +5,56 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <h3 class="text-center">Create A New Listing</h3>
-                <form method="POST" action="/listings"> 
+                <form method="POST" action="/listings"  class="needs-validation"  novalidate> 
                     <div class="mb-3">
                         <label for="title" class="form-label mb-1">Title</label>
-                        <input type="text" name="listing[title]" placeholder="Enter Title" class="form-control" />
+                        <input type="text" name="listing[title]" placeholder="Enter Title" class="form-control" required /> 
+                        <div class="valid-feedback">
+                            Looks good!
+                          </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label mb-1">Description</label>
-                        <textarea name="listing[description]" placeholder="Enter Description" class="form-control"></textarea>
+                        <textarea name="listing[description]" placeholder="Enter Description" class="form-control" required></textarea>
+                        <div class="invalid-feedback">
+                            please enter a short description
+                          </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="image" class="form-label mb-1">Image URL</label> 
-                        <input type="text" name="listing[image]" placeholder="Enter Image URL" class="form-control" />
+                        <input type="text" name="listing[image]" placeholder="Enter Image URL" class="form-control" required />
+                        <div class="invalid-feedback">
+                            please enter  Image URL
+                          </div>
                     </div>
 
                     <!-- Price and Country in One Row -->
                     <div class="row">
                         <div class="col-md-6">
                             <label for="price" class="form-label mb-1">Price</label> 
-                            <input type="number" name="listing[price]" placeholder="Enter Price" class="form-control" />
+                            <input type="number" name="listing[price]" placeholder="Enter Price" class="form-control" required />
+                            <div class="invalid-feedback">
+                                please enter a valid price
+                              </div>
                         </div>
 
                         <div class="col-md-6">
                             <label for="country" class="form-label mb-1">Country</label>
-                            <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" />
+                            <input type="text" name="listing[country]" placeholder="Enter Country" class="form-control" required />
+                            <div class="invalid-feedback">
+                                please ente the country name
+                              </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="location" class="form-label mb-1">Location</label>
-                        <input type="text" name="listing[location]" placeholder="Enter Location" class="form-control" /> 
+                        <input type="text" name="listing[location]" placeholder="Enter Location" class="form-control" required /> 
+                        <div class="invalid-feedback">
+                            loaction should be valid
+                          </div>
                     </div>
 
                     <button class="btn btn-dark w-100   mb-4" >Add</button>
